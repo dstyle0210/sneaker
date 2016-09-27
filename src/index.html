@@ -10,31 +10,45 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
 </head>
 <body>
-<section class="sneakerListSec" id="sneakerList">
-    <article class="sneakerItem" v-for="sneaker in sneakers">
-
-        <figure>
-            <a href="{{sneaker.blog}}"><img data-src="/sneaker/images/{{ sneaker.brand }}{{ sneaker.no }}/{{ sneaker.image }}" height="220" alt="{{sneaker.style}}-{{sneaker.code}} , {{sneaker.enname}} '{{sneaker.ennick}}'" /></a>
-            <figcaption>{{sneaker.style}}-{{sneaker.code}} / {{sneaker.year}}</figcaption>
-        </figure>
-        <dl class="en">
-            <dt>{{sneaker.enname}} '{{sneaker.ennick}}'</dt>
-            <dd>{{sneaker.encolor}}</dd>
-            <dd>${{sneaker.enprice}}</dd>
-            <dd class="link">
-                <a href="{{sneaker.enluanch}}" class="launch" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
-            </dd>
-        </dl>
-        <dl class="ko">
-            <dt>{{sneaker.koname}} '{{sneaker.konick}}'</dt>
-            <dd>{{sneaker.kocolor}}</dd>
-            <dd>{{sneaker.koprice}}원</dd>
-            <dd class="link">
-                <a href="{{sneaker.koluanch}}" class="launch" v-if="sneaker.koluanch"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
-                <a href="{{sneaker.early}}" class="earlylink" v-if="sneaker.early"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>EARLY LINK2</span></a>
-            </dd>
-        </dl>
-    </article>
+<header class="sneakerHeader">Dstyle's Sneaker Archive</header>
+<section class="sneakerArchiveSec" id="sneakerList">
+    <div class="sneakerSortSec">
+        <button type="button" class="langSelectBtn" v-on:click="allLang('eng')">eng</button>
+        <button type="button" class="langSelectBtn" v-on:click="allLang('kor')">kor</button>
+    </div>
+    <div class="sneakerListSec">
+        <article class="sneakerItem" v-for="sneaker in sneakers" v-show="sneaker.show">
+            <div class="{{sneaker.type}}">
+                <figure>
+                    <a href="{{sneaker.blog}}"><img data-src="/sneaker/images/{{ sneaker.brand }}{{ sneaker.no }}/{{ sneaker.image }}" alt="{{sneaker.style}}-{{sneaker.code}} , {{sneaker.enname}} '{{sneaker.ennick}}'" /></a>
+                    <figcaption>{{sneaker.style}}-{{sneaker.code}} / {{sneaker.year}}</figcaption>
+                </figure>
+                <div class="langSec">
+                    <button type="button" class="lang engBtn" v-on:click="lang($index,'eng')">ENG</button>
+                    <button type="button" class="lang korBtn" v-on:click="lang($index,'kor')">KOR</button>
+                </div>
+                <dl class="en">
+                    <dt>{{sneaker.enname}} '{{sneaker.ennick}}'</dt>
+                    <dd>{{sneaker.encolor}}</dd>
+                    <dd>{{sneaker.endate}}</dd>
+                    <dd>${{sneaker.enprice}}</dd>
+                    <dd class="link">
+                        <a href="{{sneaker.enluanch}}" class="launch" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
+                    </dd>
+                </dl>
+                <dl class="ko">
+                    <dt>{{sneaker.koname}} '{{sneaker.konick}}'</dt>
+                    <dd>{{sneaker.kocolor}}</dd>
+                    <dd>{{sneaker.kodate}}</dd>
+                    <dd v-if="sneaker.koprice">{{sneaker.koprice}}원</dd>
+                    <dd class="link">
+                        <a href="{{sneaker.koluanch}}" class="launch" target="_blank" v-if="sneaker.koluanch"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
+                        <a href="{{sneaker.early}}" class="earlylink" target="_blank" v-if="sneaker.early"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>EARLY LINK2</span></a>
+                    </dd>
+                </dl>
+            </div>
+        </article>
+    </div>
 </section>
 
 <script src="js/sneaker.js"></script>

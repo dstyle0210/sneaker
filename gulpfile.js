@@ -18,6 +18,7 @@ var insert = require('gulp-insert');
 var runSequence = require('run-sequence');
 var folders = require('gulp-folders');
 var replace = require('gulp-replace');
+var clean = require('gulp-clean');
 
 // 환경설정
 var srcPath = {};
@@ -64,16 +65,16 @@ gulp.task("css:concat", folders(srcPath.css, function(folder){
 }));
 gulp.task("scss:watch",function(){
     return gulp.watch(srcPath.scss+"/**/*.scss").on("change",function(file){
-        var name = path.parse(file.path).base;
+        var base = path.parse(file.path).base;
         pipeLineScss( gulp.src(file.path,{"base":srcPath.scss}) );
-        console.log(getTimeStamp() + " [sass:watch] "+name+" changed");
+        console.log(getTimeStamp() + " [sass:watch] "+base+" changed");
     });
 });
 gulp.task("less:watch",function(){
     return gulp.watch(srcPath.less+"/**/*.less").on("change",function(file){
-        var name = path.parse(file.path).base;
+        var base = path.parse(file.path).base;
         pipeLineLess( gulp.src(file.path,{"base":srcPath.less}) );
-        console.log(getTimeStamp() + " [less:watch] "+name+" changed");
+        console.log(getTimeStamp() + " [less:watch] "+base+" changed");
     });
 });
 gulp.task("css:watch",function(){
@@ -84,6 +85,7 @@ gulp.task("css:watch",function(){
     });
 });
 gulp.task("css:dist",function(){
+    gulp.src(distPath.css+"/*.css").pipe(clean());
     gulp.src([srcPath.css+"/*.css","!"+srcPath.css+"/_*.css"])
         .pipe(csso())
         .pipe(replace(/}/g,'}\n'))

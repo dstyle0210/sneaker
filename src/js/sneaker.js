@@ -1,69 +1,58 @@
-"use strict";
-
-var sneakersItemList = [
-    {
-        brand:"jordan",
-        no:"31",
-        year:"2016",
-        style:"845037",
-        code:"001",
-        image:"845037_001.jpg",
-        enname:"AIR JORDAN XXXI",
-        ennick:"BANNED",
-        encolor:"Black/White/University Red",
-        endate:"SATURDAY, SEPTEMBER 3, 2016 - 10:00 AM EDT",
-        enprice:"185",
-        enluanch:"http://www.nike.com/us/en_us/launch/c/2016-07/air-jordan-xxxi",
-        koname:"에어 조던 XXXI",
-        konick:"밴드(브레드)",
-        kocolor:"블랙/유니바시티레드-화이트",
-        kodate:"2016년 09월 03일 오전 11시",
-        koprice:"239000",
-        koluanch:"http://www.nike.co.kr/display/displayShop.lecs?displayNo=NK1A40B43",
-        hidden:"-",
-        early:"",
-        blog:""
-    },
-    {
-        brand:"jordan",
-        no:"31",
-        year:"2016",
-        style:"845037",
-        code:"003",
-        image:"845037_003.jpg",
-        enname:"AIR JORDAN XXXI",
-        ennick:"FINE PRINT",
-        encolor:"Black/Wolf Grey/White",
-        endate:"SATURDAY, SEPTEMBER 17, 2016 - 10:00 AM EDT",
-        enprice:"185",
-        enluanch:"http://www.nike.com/us/en_us/launch/c/2016-09/air-jordan-xxxi-fine-print",
-        koname:"에어 조던 XXXI",
-        konick:"파인프린트",
-        kocolor:"미발매",
-        kodate:"-",
-        koprice:"-",
-        koluanch:"",
-        hidden:"-",
-        early:"",
-        blog:""
-    }
-]
-
+let VUE;
 $(function(){
-    const VUE = new Vue({
-        el: '#sneakerList',
-        ready:function(){
-            $("#sneakerList img").each(function(){
-                var src = $(this).attr("data-src");
-                $(this).attr("src",src);
-            });
-        },
-        data: {
-            sneakers: sneakersItemList // _.shuffle()
-        }
+    $.getJSON("https://spreadsheets.google.com/feeds/list/1pOlPpmQkwQhXSFMDx6wryFhvQL8tjf1gbbiJQLRvDPs/1/public/values?alt=json",function(DB){
+        var sneakers = _.map(DB.feed.entry,function(data){
+            var o = {};
+            // 1차정제(스프레드시트 데이터)
+            for(key in data){
+                if(key.indexOf("gsx$")!= -1){
+                    var nkey = key.split("gsx$")[1];
+                    o[nkey] = data[key].$t;
+                }
+            }
+            return o;
+        });
+
+        _.each(sneakers,function(item){
+            item.type="kor";
+            item.show="show";
+        });
+        VUE = new Vue({
+            el: '#sneakerList',
+            ready:function(){
+                $("#sneakerList img").each(function(){
+                    var src = $(this).attr("data-src");
+                    $(this).attr("src",src);
+                });
+            },
+            data: {
+                sneakers: sneakers // _.shuffle()
+            },
+            methods:{
+                lang:function(index,lang){
+                    this.sneakers[index].type=lang;
+                },
+                allLang:function(lang){
+                    _.each(this.sneakers,function(item){
+                        item.type = lang;
+                    });
+                },
+                update:function(){
+                    _.each(this.sneakers,function(item,index){
+                        console.log(index);
+                        item.show = (index%2==0) ? "" : "show";
+                    });
+                },
+                viewAll:function(){
+                    _.each(this.sneakers,function(item,index){
+                        item.show = "show";
+                    });
+                }
+            }
+        });
     });
-    console.log(VUE);
 });
+
 
 
 /*

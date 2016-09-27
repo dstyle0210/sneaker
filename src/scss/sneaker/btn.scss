@@ -9,3 +9,10 @@ a.earlylink{display:inline-block;padding:5px;font-size:11px;text-decoration:none
   span{display:none;}
   &:hover span{padding-left:5px;display:inline-block;}
 }
+
+button.lang{display:inline-block;padding:2px 5px;font-size:9px;text-decoration:none;background: #ccc;border-radius: 5px;color:#fff;white-space:nowrap;
+  &.on{background:#333;}
+}
+.langSelectBtn{display:inline-block;padding:2px 5px;font-size:9px;text-decoration:none;background: #ccc;border-radius: 5px;color:#fff;white-space:nowrap;
+  &.on{background:#333;}
+}
