@@ -1,0 +1,11 @@
+
+/*! Button */
+a.launch{display:inline-block;padding:5px;font-size:11px;text-decoration:none;background: #333;border-radius: 5px;color:#fff;white-space:nowrap;
+  span{display:none;}
+  &:hover span{padding-left:5px;display:inline-block;}
+}
+
+a.earlylink{display:inline-block;padding:5px;font-size:11px;text-decoration:none;background: #1b926c;border-radius: 5px;color:#fff;white-space:nowrap;
+  span{display:none;}
+  &:hover span{padding-left:5px;display:inline-block;}
+}

@@ -1,0 +1,42 @@
+<!doctype html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>Dstyle's Sneaker Archive</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/sneaker.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/1.0.27/vue.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.8.3/underscore-min.js"></script>
+</head>
+<body>
+<section class="sneakerListSec" id="sneakerList">
+    <article class="sneakerItem" v-for="sneaker in sneakers">
+
+        <figure>
+            <a href="{{sneaker.blog}}"><img data-src="/sneaker/images/{{ sneaker.brand }}{{ sneaker.no }}/{{ sneaker.image }}" height="220" alt="{{sneaker.style}}-{{sneaker.code}} , {{sneaker.enname}} '{{sneaker.ennick}}'" /></a>
+            <figcaption>{{sneaker.style}}-{{sneaker.code}} / {{sneaker.year}}</figcaption>
+        </figure>
+        <dl class="en">
+            <dt>{{sneaker.enname}} '{{sneaker.ennick}}'</dt>
+            <dd>{{sneaker.encolor}}</dd>
+            <dd>${{sneaker.enprice}}</dd>
+            <dd class="link">
+                <a href="{{sneaker.enluanch}}" class="launch" target="_blank"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
+            </dd>
+        </dl>
+        <dl class="ko">
+            <dt>{{sneaker.koname}} '{{sneaker.konick}}'</dt>
+            <dd>{{sneaker.kocolor}}</dd>
+            <dd>{{sneaker.koprice}}원</dd>
+            <dd class="link">
+                <a href="{{sneaker.koluanch}}" class="launch" v-if="sneaker.koluanch"><i class="fa fa-external-link" aria-hidden="true"></i><span>LAUNCH</span></a>
+                <a href="{{sneaker.early}}" class="earlylink" v-if="sneaker.early"><i class="fa fa-paper-plane" aria-hidden="true"></i><span>EARLY LINK2</span></a>
+            </dd>
+        </dl>
+    </article>
+</section>
+
+<script src="js/sneaker.js"></script>
+</body>
+</html>
